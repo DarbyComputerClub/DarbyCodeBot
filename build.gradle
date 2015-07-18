@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'jdepend'
+apply plugin: 'pmd'
+apply plugin: 'eclipse'
+apply plugin: 'project-report'
+apply plugin: 'application'
+
+sourceCompatibility = 1.6
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.ullink.slack:simpleslackapi:0.4.0'
+    compile 'org.apache.logging.log4j:log4j-api:2.3'
+    compile 'org.apache.logging.log4j:log4j-core:2.3'
+    testCompile 'junit:junit:4.12'
+}
+
+mainClassName = "io.github.darbycomputerclub.Main"
