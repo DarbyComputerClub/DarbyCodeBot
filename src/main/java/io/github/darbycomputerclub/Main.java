@@ -15,7 +15,7 @@ public class Main {
 		session.addMessagePostedListener(new SlackMessagePostedListener() {
 			@Override
 			public void onEvent(SlackMessagePosted event, SlackSession session) {
-				System.out.println(event.getMessageContent());
+				System.out.println("[" + event.getTimeStamp() + " - " + event.getSender().getUserName()  + "] " + event.getMessageContent());
 			}
 	    });
 	    
