@@ -4,7 +4,6 @@ apply plugin: 'findbugs'
 apply plugin: 'jdepend'
 apply plugin: 'pmd'
 apply plugin: 'eclipse'
-apply plugin: 'project-report'
 apply plugin: 'application'
 
 sourceCompatibility = 1.6
@@ -22,6 +21,18 @@ dependencies {
 mainClassName = "io.github.darbycomputerclub.Main"
 
 checkstyle {
-    toolVersion = "6.8.1"
+    toolVersion = "6.7"
     ignoreFailures = true
+}
+
+findbugs {
+	ignoreFailures = true
+}
+
+pmd {
+	ignoreFailures = true
+}
+
+jdepend {
+	ignoreFailures = true
 }
