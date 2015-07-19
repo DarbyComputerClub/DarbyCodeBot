@@ -1,7 +1,6 @@
 package io.github.darbycomputerclub;
 
 import java.io.IOException;
-
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
@@ -10,7 +9,11 @@ import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener;
 public class Main {
 
 	public static void main(String[] args) {
-		final SlackSession session = SlackSessionFactory.createWebSocketSlackSession("authenticationtoken");
+		
+		final AuthToken authToken = new AuthToken();
+		
+		//Remember: Never commit the authentication token!
+		final SlackSession session = SlackSessionFactory.createWebSocketSlackSession(authToken.getAuthToken());
 	    
 		session.addMessagePostedListener(new SlackMessagePostedListener() {
 			@Override

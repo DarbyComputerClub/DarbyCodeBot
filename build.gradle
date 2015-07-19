@@ -20,3 +20,8 @@ dependencies {
 }
 
 mainClassName = "io.github.darbycomputerclub.Main"
+
+checkstyle {
+    toolVersion = "6.8.1"
+    ignoreFailures = true
+}
