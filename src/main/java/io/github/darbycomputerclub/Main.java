@@ -10,6 +10,7 @@ import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
 import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener;
 
 import io.github.darbycomputerclub.error.Error;
+import io.github.darbycomputerclub.message.ProcessMessage;
 
 /**
  * Starting point when run.
@@ -17,9 +18,9 @@ import io.github.darbycomputerclub.error.Error;
 public class Main {
 
 	/**
-	 * Main logger.
+	 * Logger.
 	 */
-	private static Logger logger = Logger.getLogger(Class.class);
+	private static Logger logger = Logger.getLogger(Main.class);
 	
 	/**
 	 * Constant used to reduce the amount of calls to slack.
@@ -27,7 +28,7 @@ public class Main {
 	private static final int SLEEP_CONSTANT = 1000;
 
 	/**
-	 * This class should not be used.
+	 * This class created as an object.
 	 */
 	protected Main() {
 		throw new UnsupportedOperationException(); 
@@ -40,13 +41,11 @@ public class Main {
 	 */
 	public static void main(final String[] args) {
 		
-		final AuthToken authToken = new AuthToken();
-		
 		//Remember: Never commit the authentication token!
 		SlackSession session = null;
 		try {
 			session = SlackSessionFactory
-					.createWebSocketSlackSession(authToken.getAuthToken());
+					.createWebSocketSlackSession(AuthToken.getAuthToken());
 		} catch (FileNotFoundException e) {
 			logger.severe(e.getMessage());
 			
@@ -68,6 +67,7 @@ public class Main {
 				logger.info("[" + event.getTimeStamp() + " - " 
 						+ event.getSender().getUserName()  + "] " 
 						+ event.getMessageContent());
+				ProcessMessage.processMessage(event, session);
 			}
 	    });
 	    
