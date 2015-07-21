@@ -6,7 +6,15 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class AuthToken {
-	public String getAuthToken() {
+	
+	/**
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * Retrieves the authentication token from the config.properties file.
+	 * @return authentication token
+	 * @throws  
+	 */
+	public final String getAuthToken() throws IOException, FileNotFoundException {
 		 
 		InputStream inputStream = null;
 		String authenticationToken = null;
@@ -14,25 +22,22 @@ public class AuthToken {
 			Properties prop = new Properties();
 			String propFileName = "config.properties";
  
-			inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+			inputStream = getClass().getClassLoader()
+					.getResourceAsStream(propFileName);
  
 			if (inputStream != null) {
 				prop.load(inputStream);
 			} else {
-				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+				throw new FileNotFoundException("property file '"
+						+ propFileName + "' not found in the classpath");
 			}
  
 			// get the property value and print it out
 			authenticationToken = prop.getProperty("user");
 			
-		} catch (Exception e) {
-			System.out.println("Exception: " + e);
 		} finally {
-			try {
+			if (inputStream != null) {
 				inputStream.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 		return authenticationToken;
