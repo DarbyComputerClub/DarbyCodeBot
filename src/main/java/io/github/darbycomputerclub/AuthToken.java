@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import com.sun.istack.internal.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.github.darbycomputerclub.message.response.Help;
 
 /**
  * Retrieves the authentication token from config.properties.
@@ -16,7 +19,7 @@ public class AuthToken {
 	/**
 	 * Logger.
 	 */
-	private static Logger logger = Logger.getLogger(AuthToken.class);
+	private static Logger logger = LoggerFactory.getLogger(Help.class);
 	
 	/**
 	 * This class should not be created as an object.

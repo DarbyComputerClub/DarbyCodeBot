@@ -3,7 +3,9 @@
  */
 package io.github.darbycomputerclub.message;
 
-import com.sun.istack.internal.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 
@@ -16,7 +18,8 @@ public final class ProcessMessage {
 	/**
 	 * Logger.
 	 */
-	private static Logger logger = Logger.getLogger(ProcessMessage.class);
+	private static Logger logger = LoggerFactory
+			.getLogger(ProcessMessage.class);
 	
 	/**
 	 * This class should not be created as an object.
