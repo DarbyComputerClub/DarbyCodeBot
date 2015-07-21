@@ -3,7 +3,9 @@ package io.github.darbycomputerclub;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import com.sun.istack.internal.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
@@ -19,7 +21,7 @@ public class Main {
 	/**
 	 * Main logger.
 	 */
-	private static Logger logger = Logger.getLogger(Class.class);
+	private static Logger logger = LoggerFactory.getLogger(Class.class);
 	
 	/**
 	 * Constant used to reduce the amount of calls to slack.
@@ -48,15 +50,15 @@ public class Main {
 			session = SlackSessionFactory
 					.createWebSocketSlackSession(authToken.getAuthToken());
 		} catch (FileNotFoundException e) {
-			logger.severe(e.getMessage());
+			logger.error(e.getMessage());
 			
-			logger.severe("Likely cause: " 
+			logger.error("Likely cause: " 
 					+ Error.NO_CONFIG.getDescription());
 			System.exit(Error.NO_CONFIG.getCode());
 		} catch (IOException e) {
-			logger.severe(e.getMessage());
+			logger.error(e.getMessage());
 			
-			logger.severe("Likely cause: " 
+			logger.error("Likely cause: " 
 					+ Error.CONFIG_READ.getDescription());
 			System.exit(Error.CONFIG_READ.getCode());
 		}
@@ -68,20 +70,21 @@ public class Main {
 				logger.info("[" + event.getTimeStamp() + " - " 
 						+ event.getSender().getUserName()  + "] " 
 						+ event.getMessageContent());
+				
 			}
 	    });
 	    
 		try {
 			session.connect();
 		} catch (IOException e) {
-			logger.severe(e.getMessage());
+			logger.error(e.getMessage());
 		}
 
 	    while (true) {
 	    	try {
 	    		Thread.sleep(SLEEP_CONSTANT);
 			} catch (InterruptedException e) {
-				logger.severe(e.getMessage());
+				logger.error(e.getMessage());
 			}
 	    }
 
