@@ -1,20 +1,36 @@
 package io.github.darbycomputerclub;
 
-import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import com.sun.istack.internal.logging.Logger;
+
+/**
+ * Retrieves the authentication token from config.properties.
+ */
 public class AuthToken {
 	
 	/**
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
-	 * Retrieves the authentication token from the config.properties file.
-	 * @return authentication token
-	 * @throws  
+	 * Logger.
 	 */
-	public final String getAuthToken() throws IOException, FileNotFoundException {
+	private static Logger logger = Logger.getLogger(AuthToken.class);
+	
+	/**
+	 * This class should not be created as an object.
+	 */
+	protected AuthToken() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @throws IOException
+	 * Retrieves the authentication token from config.properties.
+	 * @return authentication token
+	 */
+	public static final String getAuthToken() throws IOException {
 		 
 		InputStream inputStream = null;
 		String authenticationToken = null;
@@ -22,19 +38,14 @@ public class AuthToken {
 			Properties prop = new Properties();
 			String propFileName = "config.properties";
  
-			inputStream = getClass().getClassLoader()
-					.getResourceAsStream(propFileName);
+			inputStream = new FileInputStream(new File(propFileName));
  
-			if (inputStream != null) {
-				prop.load(inputStream);
-			} else {
-				throw new FileNotFoundException("property file '"
-						+ propFileName + "' not found in the classpath");
-			}
+			prop.load(inputStream);
  
 			// get the property value and print it out
-			authenticationToken = prop.getProperty("user");
+			authenticationToken = prop.getProperty("authenticationtoken");
 			
+			logger.info("Found config with property " + authenticationToken);
 		} finally {
 			if (inputStream != null) {
 				inputStream.close();
