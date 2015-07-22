@@ -12,7 +12,15 @@ public enum Error {
 	/**
 	 * Other file read exception on config.properties.
 	 */
-	CONFIG_READ(2, "Other file read exception on config.properties.");
+	CONFIG_READ(2, "Other file read exception on config.properties."),
+	/**
+	 * Other file read exception on config.properties.
+	 */
+	ALREADY_RUNNING(3, "Process already running. "),
+	/**
+	 * Other file read exception on config.properties.
+	 */
+	SOCKET_ERROR(4, "Unexpected Socket Error.");
 
 	/**
 	 * Error code.
