@@ -68,20 +68,20 @@ public class Main {
 					Configuration.getConfig("authenticationtoken"));
 		} catch (FileNotFoundException e) {
 			logger.error(e.getMessage());
-
 			logger.error("Likely cause: " + Error.NO_CONFIG.getDescription());
 			System.exit(Error.NO_CONFIG.getCode());
 		} catch (IOException e) {
 			logger.error(e.getMessage());
-
 			logger.error("Likely cause: " + Error.CONFIG_READ.getDescription());
 			System.exit(Error.CONFIG_READ.getCode());
 		}
 
 		session.addMessagePostedListener(new SlackMessagePostedListener() {
 			@Override
-			public void onEvent(final SlackMessagePosted event, final SlackSession session) {
-				logger.info("[" + event.getTimeStamp() + " - " + event.getSender().getUserName() + "] "
+			public void onEvent(final SlackMessagePosted event, 
+					final SlackSession session) {
+				logger.info("[" + event.getTimeStamp() + " - " 
+						+ event.getSender().getUserName() + "] "
 						+ event.getMessageContent());
 				ProcessMessage.processMessage(event, session);
 			}
@@ -116,15 +116,15 @@ public class Main {
 					Integer.parseInt(Configuration.getConfig("port")), 0, 
 					InetAddress.getByAddress(BIND_ADDRESS));
 		} catch (BindException e) {
-			System.err.println("Already running.");
-			
-			
-			
-			System.exit(1);
+			logger.error(e.getMessage());
+			logger.error("Likely cause: " 
+					+ Error.ALREADY_RUNNING.getDescription());
+			System.exit(Error.ALREADY_RUNNING.getCode());
 		} catch (IOException e) {
-			System.err.println("Unexpected error.");
-			e.printStackTrace();
-			System.exit(2);
+			logger.error(e.getMessage());
+			logger.error("Likely cause: " 
+					+ Error.SOCKET_ERROR.getDescription());
+			System.exit(Error.SOCKET_ERROR.getCode());
 		}
 	}
 }
