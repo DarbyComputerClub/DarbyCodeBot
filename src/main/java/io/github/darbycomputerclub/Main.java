@@ -1,14 +1,10 @@
 package io.github.darbycomputerclub;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.net.BindException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.nio.channels.FileLock;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,6 +55,9 @@ public class Main {
 	 *            None.
 	 */
 	public static void main(final String[] args) {
+		logger.info("Working Directory = "
+				+ System.getProperty("user.dir"));
+		
 		checkIfRunning();
 
 		// Remember: Never commit the authentication token!
