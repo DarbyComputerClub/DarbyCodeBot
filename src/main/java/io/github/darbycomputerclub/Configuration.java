@@ -12,31 +12,28 @@ import org.slf4j.LoggerFactory;
 import io.github.darbycomputerclub.message.response.Help;
 
 /**
- * Retrieves the authentication token from config.properties.
+ * Retrieves the configuration property from config.properties.
  */
-public class AuthToken {
-	
-	/**
-	 * Logger.
-	 */
-	private static Logger logger = LoggerFactory.getLogger(Help.class);
+public class Configuration {
 	
 	/**
 	 * This class should not be created as an object.
 	 */
-	protected AuthToken() {
+	protected Configuration() {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * @throws IOException
 	 * Retrieves the authentication token from config.properties.
-	 * @return authentication token
+	 * @param property to retrieve
+	 * @return property
 	 */
-	public static final String getAuthToken() throws IOException {
+	public static final String getConfig(final String property) 
+			throws IOException {
 		 
 		InputStream inputStream = null;
-		String authenticationToken = null;
+		String value = null;
 		try {
 			Properties prop = new Properties();
 			String propFileName = "config.properties";
@@ -46,14 +43,12 @@ public class AuthToken {
 			prop.load(inputStream);
  
 			// get the property value and print it out
-			authenticationToken = prop.getProperty("authenticationtoken");
-			
-			logger.info("Found config with property " + authenticationToken);
+			value = prop.getProperty(property);
 		} finally {
 			if (inputStream != null) {
 				inputStream.close();
 			}
 		}
-		return authenticationToken;
+		return value;
 	}
 }
