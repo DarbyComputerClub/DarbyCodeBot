@@ -36,3 +36,9 @@ pmd {
 jdepend {
 	ignoreFailures = true
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'io.github.darbycomputerclub.Main'
+    }
+}
