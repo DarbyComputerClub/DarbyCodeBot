@@ -1,4 +1,4 @@
-package io.github.darbycomputerclub.message.response;
+package io.github.darbycomputerclub.message;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,10 +6,13 @@ import org.slf4j.LoggerFactory;
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 
+import io.github.darbycomputerclub.message.response.Help;
+import io.github.darbycomputerclub.message.response.Response;
+
 /**
- * Performs the "!help" action.
+ * Performs the "!ping" action.
  */
-public class Help extends Response {
+public class Ping extends Response {
 
 	/**
 	 * Logger.
@@ -19,7 +22,7 @@ public class Help extends Response {
 	/**
 	 * This class should not be created as an object.
 	 */
-	protected Help() {
+	protected Ping() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -30,11 +33,10 @@ public class Help extends Response {
 	 */
 	public static void processEvent(final SlackMessagePosted event, 
 			final SlackSession session) {
-		String response = "List of commands: \n" 
-			+ "!help: Displays this message.\n" 
-			+ "!ping: Responds with pong to test server uptime.";
+		String response = "Pong.";
 		
 		session.sendMessage(event.getChannel(), response, null);
 		logger.info("Responded with: \n" + response);
 	}
+
 }

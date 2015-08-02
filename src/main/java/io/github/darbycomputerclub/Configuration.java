@@ -6,11 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import io.github.darbycomputerclub.message.response.Help;
-
 /**
  * Retrieves the configuration property from config.properties.
  */

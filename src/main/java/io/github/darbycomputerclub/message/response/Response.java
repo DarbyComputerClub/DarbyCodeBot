@@ -7,34 +7,31 @@ import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 
 /**
- * Performs the "!help" action.
+ * Basis for responses.
  */
-public class Help extends Response {
-
+public class Response {
 	/**
 	 * Logger.
 	 */
-	private static Logger logger = LoggerFactory.getLogger(Help.class);
+	private static Logger logger = LoggerFactory.getLogger(Response.class);
 	
 	/**
 	 * This class should not be created as an object.
 	 */
-	protected Help() {
+	protected Response() {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
-	 * Performs the "!help" action.
+	 * Performs no action.
 	 * @param session 
 	 * @param event 
 	 */
 	public static void processEvent(final SlackMessagePosted event, 
 			final SlackSession session) {
-		String response = "List of commands: \n" 
-			+ "!help: Displays this message.\n" 
-			+ "!ping: Responds with pong to test server uptime.";
-		
-		session.sendMessage(event.getChannel(), response, null);
-		logger.info("Responded with: \n" + response);
+		logger.warn("Interesting... "
+			+ "An un implemented command was just called...");
+		session.sendMessage(event.getChannel(), 
+				"Command not implemented.", null);
 	}
 }
