@@ -34,9 +34,14 @@ public final class ProcessMessage {
 	 */
 	public static void processMessage(final SlackMessagePosted event, 
 					final SlackSession session) {
-		if (event.getMessageContent().toString().equalsIgnoreCase("!help")) {
+		if (event.getMessageContent().toString()
+				.equalsIgnoreCase("!help")) {
 			logger.info("Processing Help Command");
-			Help.doHelp(event, session);
+			Help.processEvent(event, session);
+		} else if (event.getMessageContent().toString()
+				.equalsIgnoreCase("!ping")) {
+			logger.info("Processing Ping Command");
+			Ping.processEvent(event, session);
 		}
 	}
 }

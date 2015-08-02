@@ -111,9 +111,9 @@ public class Main {
 	private static void checkIfRunning() {
 		try {
 			// Bind to localhost adapter with a zero connection queue
-			socket = new ServerSocket(
+			setSocket(new ServerSocket(
 					Integer.parseInt(Configuration.getConfig("port")), 0, 
-					InetAddress.getByAddress(BIND_ADDRESS));
+					InetAddress.getByAddress(BIND_ADDRESS)));
 		} catch (BindException e) {
 			logger.error(e.getMessage());
 			logger.error("Likely cause: " 
@@ -125,5 +125,19 @@ public class Main {
 					+ Error.SOCKET_ERROR.getDescription());
 			System.exit(Error.SOCKET_ERROR.getCode());
 		}
+	}
+
+	/**
+	 * @return socket
+	 */
+	public static ServerSocket getSocket() {
+		return socket;
+	}
+
+	/**
+	 * @param newSocket 
+	 */
+	public static void setSocket(final ServerSocket newSocket) {
+		socket = newSocket;
 	}
 }
