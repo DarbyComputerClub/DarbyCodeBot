@@ -1,13 +1,10 @@
-package io.github.darbycomputerclub.message;
+package io.github.darbycomputerclub.message.response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
-
-import io.github.darbycomputerclub.message.response.Help;
-import io.github.darbycomputerclub.message.response.Response;
 
 /**
  * Performs the "!ping" action.
