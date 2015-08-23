@@ -10,6 +10,7 @@ import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 
 import io.github.darbycomputerclub.message.response.Help;
+import io.github.darbycomputerclub.message.response.Ping;
 
 /**
  * Method to start the message processing. //TODO: Reword.
@@ -40,6 +41,10 @@ public final class ProcessMessage {
 			Help.processEvent(event, session);
 		} else if (event.getMessageContent().toString()
 				.equalsIgnoreCase("!ping")) {
+			logger.info("Processing Ping Command");
+			Ping.processEvent(event, session);
+		} else if (event.getMessageContent().toString()
+				.startsWith("!qr")) {
 			logger.info("Processing Ping Command");
 			Ping.processEvent(event, session);
 		}
