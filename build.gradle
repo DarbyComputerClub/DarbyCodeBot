@@ -42,3 +42,7 @@ jar {
         attributes 'Main-Class': 'io.github.darbycomputerclub.Main'
     }
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.6'
+}
