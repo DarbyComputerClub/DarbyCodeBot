@@ -9,7 +9,7 @@ import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 /**
  * Performs the "!help" action.
  */
-public class QR extends Response {
+public class QR extends MessageEvent {
 
 	/**
 	 * Logger.
@@ -28,12 +28,14 @@ public class QR extends Response {
 	 * @param session 
 	 * @param event 
 	 */
-	public static void processEvent(final SlackMessagePosted event, 
+	public void processEvent(final SlackMessagePosted event, 
 			final SlackSession session) {
-		String response = "http://api.qrserver.com/v1/create-qr-code/?size=256x256&data="
-				+ event.getMessageContent().split(" ")[1];
-		
-		session.sendMessage(event.getChannel(), response, null);
-		logger.info("Responded with: \n" + response);
+		if (event.getMessageContent().toString()
+				.startsWith("!qr")) {
+			String response = "http://api.qrserver.com/v1/create-qr-code/?size=256x256&data="
+					+ event.getMessageContent().split(" ")[1];
+			session.sendMessage(event.getChannel(), response, null);
+			logger.info("Responded with: \n" + response);
+		}
 	}
 }

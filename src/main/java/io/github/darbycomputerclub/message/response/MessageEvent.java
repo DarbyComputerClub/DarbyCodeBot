@@ -9,16 +9,16 @@ import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 /**
  * Basis for responses.
  */
-public class Response {
+public class MessageEvent {
 	/**
 	 * Logger.
 	 */
-	private static Logger logger = LoggerFactory.getLogger(Response.class);
+	private static Logger logger = LoggerFactory.getLogger(MessageEvent.class);
 	
 	/**
 	 * This class should not be created as an object.
 	 */
-	protected Response() {
+	protected MessageEvent() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -27,7 +27,7 @@ public class Response {
 	 * @param session 
 	 * @param event 
 	 */
-	public static void processEvent(final SlackMessagePosted event, 
+	public void processEvent(final SlackMessagePosted event, 
 			final SlackSession session) {
 		logger.warn("Interesting... "
 			+ "An un implemented command was just called...");

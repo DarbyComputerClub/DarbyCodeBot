@@ -9,7 +9,7 @@ import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 /**
  * Performs the "!ping" action.
  */
-public class Ping extends Response {
+public class Ping extends MessageEvent {
 
 	/**
 	 * Logger.
@@ -28,12 +28,14 @@ public class Ping extends Response {
 	 * @param session 
 	 * @param event 
 	 */
-	public static void processEvent(final SlackMessagePosted event, 
+	public void processEvent(final SlackMessagePosted event, 
 			final SlackSession session) {
-		String response = "Pong.";
-		
-		session.sendMessage(event.getChannel(), response, null);
-		logger.info("Responded with: \n" + response);
+		if (event.getMessageContent().toString()
+				.equalsIgnoreCase("!ping")) {
+			String response = "Pong.";
+			session.sendMessage(event.getChannel(), response, null);
+			logger.info("Responded with: \n" + response);
+		}
 	}
 
 }
