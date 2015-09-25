@@ -9,7 +9,7 @@ import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 /**
  * Performs the "!help" action.
  */
-public class Help extends Response {
+public class Help extends MessageEvent {
 
 	/**
 	 * Logger.
@@ -28,13 +28,14 @@ public class Help extends Response {
 	 * @param session 
 	 * @param event 
 	 */
-	public static void processEvent(final SlackMessagePosted event, 
+	public void processEvent(final SlackMessagePosted event, 
 			final SlackSession session) {
-		String response = "List of commands: \n" 
-			+ "!help: Displays this message.\n" 
-			+ "!ping: Responds with pong to test server uptime.";
-		
-		session.sendMessage(event.getChannel(), response, null);
-		logger.info("Responded with: \n" + response);
+		if (event.getMessageContent().toString()
+				.equalsIgnoreCase("!help")) {
+			String response = "List of commands: \n" + "!help: Displays this message.\n"
+					+ "!ping: Responds with pong to test server uptime.";
+			session.sendMessage(event.getChannel(), response, null);
+			logger.info("Responded with: \n" + response);
+		}
 	}
 }

@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.net.BindException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,13 +17,15 @@ import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
 import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener;
 
 import io.github.darbycomputerclub.error.Error;
-import io.github.darbycomputerclub.message.ProcessMessage;
+import io.github.darbycomputerclub.message.response.MessageEvent;
 
 /**
  * Starting point when run.
  */
 public class Main {
 
+	private static ArrayList<MessageEvent> commands = new ArrayList<MessageEvent>();
+	
 	/**
 	 * Address to bind socket to.
 	 */
@@ -79,10 +84,10 @@ public class Main {
 			@Override
 			public void onEvent(final SlackMessagePosted event, 
 					final SlackSession session) {
-				logger.info("[" + event.getTimeStamp() + " - " 
-						+ event.getSender().getUserName() + "] "
-						+ event.getMessageContent());
-				ProcessMessage.processMessage(event, session);
+				for (MessageEvent runEvent : commands) {
+					logger.info("Checking " + runEvent.getClass().getSimpleName());
+					runEvent.processEvent(event, session);
+				}
 			}
 		});
 
