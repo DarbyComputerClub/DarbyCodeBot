@@ -41,8 +41,11 @@ jar {
     manifest {
         attributes 'Main-Class': 'io.github.darbycomputerclub.Main'
     }
+
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.6'
 }
+
