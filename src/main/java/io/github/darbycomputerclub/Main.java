@@ -1,13 +1,10 @@
 package io.github.darbycomputerclub;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.BindException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,15 +14,34 @@ import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
 import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener;
 
 import io.github.darbycomputerclub.error.Error;
-import io.github.darbycomputerclub.message.response.MessageEvent;
+import io.github.darbycomputerclub.message.MessageEvent;
+import io.github.darbycomputerclub.message.response.*;
 
 /**
  * Starting point when run.
  */
 public class Main {
 
-	private static ArrayList<MessageEvent> commands = new ArrayList<MessageEvent>();
+	/**
+	 * List of registered commands.
+	 */
+	private static ArrayList<MessageEvent> commands = 
+			new ArrayList<MessageEvent>();
+
+	/**
+	 * @return List of registered commands.
+	 */
+	public static ArrayList<MessageEvent> getCommands() {
+		return commands;
+	}
 	
+	/**
+	 * @param command Command to add.
+	 */
+	public static void setCommands(final MessageEvent command) {
+		commands.add(command);
+	}
+
 	/**
 	 * Address to bind socket to.
 	 */
@@ -60,32 +76,30 @@ public class Main {
 	 *            None.
 	 */
 	public static void main(final String[] args) {
+		for (int i = 0; i < args.length; i++) {
+			logger.debug("Argument #" + i + ": " + args[i]);
+		}
+		
 		logger.info("Working Directory = "
 				+ System.getProperty("user.dir"));
 		
 		checkIfRunning();
 
 		// Remember: Never commit the authentication token!
-		SlackSession session = null;
-		try {
-			session = SlackSessionFactory.createWebSocketSlackSession(
-					Configuration.getConfig("authenticationtoken"));
-		} catch (FileNotFoundException e) {
-			logger.error(e.getMessage());
-			logger.error("Likely cause: " + Error.NO_CONFIG.getDescription());
-			System.exit(Error.NO_CONFIG.getCode());
-		} catch (IOException e) {
-			logger.error(e.getMessage());
-			logger.error("Likely cause: " + Error.CONFIG_READ.getDescription());
-			System.exit(Error.CONFIG_READ.getCode());
-		}
-
+		SlackSession session = SlackSessionFactory
+				.createWebSocketSlackSession(args[0]);
+		
+		commands.add(new Help());
+		commands.add(new Ping());
+		commands.add(new QR());
+		
 		session.addMessagePostedListener(new SlackMessagePostedListener() {
 			@Override
 			public void onEvent(final SlackMessagePosted event, 
 					final SlackSession session) {
 				for (MessageEvent runEvent : commands) {
-					logger.info("Checking " + runEvent.getClass().getSimpleName());
+					logger.info("Checking " + runEvent.helpMessage());
+					
 					runEvent.processEvent(event, session);
 				}
 			}

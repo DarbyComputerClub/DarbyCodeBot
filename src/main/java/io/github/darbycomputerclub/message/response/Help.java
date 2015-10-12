@@ -6,6 +6,9 @@ import org.slf4j.LoggerFactory;
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 
+import io.github.darbycomputerclub.Main;
+import io.github.darbycomputerclub.message.MessageEvent;
+
 /**
  * Performs the "!help" action.
  */
@@ -17,25 +20,31 @@ public class Help extends MessageEvent {
 	private static Logger logger = LoggerFactory.getLogger(Help.class);
 	
 	/**
-	 * This class should not be created as an object.
-	 */
-	protected Help() {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Performs the "!help" action.
+	 * Performs the "help" action.
 	 * @param session 
 	 * @param event 
 	 */
-	public void processEvent(final SlackMessagePosted event, 
+	public final void processEvent(final SlackMessagePosted event, 
 			final SlackSession session) {
 		if (event.getMessageContent().toString()
 				.equalsIgnoreCase("!help")) {
-			String response = "List of commands: \n" + "!help: Displays this message.\n"
-					+ "!ping: Responds with pong to test server uptime.";
+			String response = "List of commands: " 
+				+ "(Format: `command [required] (optional)`)\n";
+			
+			for (MessageEvent runEvent : Main.getCommands()) {
+				logger.info("Checking " + runEvent.getClass().getSimpleName());
+				if (!runEvent.helpMessage().equals(null)) {
+					response += runEvent.helpMessage() + "\n";
+				}
+			}
+			
 			session.sendMessage(event.getChannel(), response, null);
 			logger.info("Responded with: \n" + response);
 		}
+	}
+
+	@Override
+	public final String helpMessage() {
+		return "help: Returns this message";
 	}
 }
