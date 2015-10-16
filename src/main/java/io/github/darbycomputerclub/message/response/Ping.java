@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 
+import io.github.darbycomputerclub.message.MessageEvent;
+
 /**
  * Performs the "!ping" action.
  */
@@ -17,18 +19,11 @@ public class Ping extends MessageEvent {
 	private static Logger logger = LoggerFactory.getLogger(Help.class);
 	
 	/**
-	 * This class should not be created as an object.
-	 */
-	protected Ping() {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Performs the "!help" action.
+	 * Performs the "ping" action.
 	 * @param session 
 	 * @param event 
 	 */
-	public void processEvent(final SlackMessagePosted event, 
+	public final void processEvent(final SlackMessagePosted event, 
 			final SlackSession session) {
 		if (event.getMessageContent().toString()
 				.equalsIgnoreCase("!ping")) {
@@ -38,4 +33,8 @@ public class Ping extends MessageEvent {
 		}
 	}
 
+	@Override
+	public final String helpMessage() {
+		return "`ping`: Responds with pong.";
+	}
 }
