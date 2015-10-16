@@ -36,6 +36,6 @@ public class QR extends MessageEvent {
 
 	@Override
 	public final String helpMessage() {
-		return "qr [text/url]: Creates a QR code from text/url";
+		return "`qr [text/url]`: Creates a QR code from text/url";
 	}
 }

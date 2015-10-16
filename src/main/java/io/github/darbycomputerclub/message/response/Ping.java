@@ -35,6 +35,6 @@ public class Ping extends MessageEvent {
 
 	@Override
 	public final String helpMessage() {
-		return "ping: Responds with pong.";
+		return "`ping`: Responds with pong.";
 	}
 }

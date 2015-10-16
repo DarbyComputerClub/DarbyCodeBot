@@ -45,6 +45,6 @@ public class Help extends MessageEvent {
 
 	@Override
 	public final String helpMessage() {
-		return "help: Returns this message";
+		return "`help`: Returns this message";
 	}
 }

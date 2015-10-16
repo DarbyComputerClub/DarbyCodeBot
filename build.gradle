@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.ullink.slack:simpleslackapi:0.4.0'
+    compile 'com.ullink.slack:simpleslackapi:0.4.5'
     compile 'ch.qos.logback:logback-classic:1.1.3'
     testCompile 'junit:junit:4.12'
 }
@@ -21,7 +21,7 @@ dependencies {
 mainClassName = "io.github.darbycomputerclub.Main"
 
 checkstyle {
-    toolVersion = "6.7"
+    toolVersion = "6.11.2"
     ignoreFailures = true
 }
 
@@ -46,6 +46,9 @@ jar {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.6'
+    gradleVersion = '2.7'
 }
 
+run.doFirst {
+	throw new GradleException("This should not be run from Gradle as there is \nno way to capture the Slack API key yet from Gradle.  \nPlease run this program manually.")
+}

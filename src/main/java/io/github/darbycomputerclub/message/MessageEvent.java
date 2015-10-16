@@ -19,7 +19,7 @@ public abstract class MessageEvent {
 	
 	/**
 	 * Text for help message.  Should be in the form of:
-	 * <pre>command [required] (optional)</pre>
+	 * <pre>`command [required] (optional)`: Message</pre>
 	 * 
 	 * @return help message
 	 */
