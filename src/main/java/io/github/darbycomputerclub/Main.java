@@ -87,7 +87,7 @@ public class Main {
 
 		// Remember: Never commit the authentication token!
 		SlackSession session = SlackSessionFactory
-				.createWebSocketSlackSession(args[0]);
+				.createWebSocketSlackSession(System.getenv("SLACK_API"));
 		
 		commands.add(new Help());
 		commands.add(new Ping());
