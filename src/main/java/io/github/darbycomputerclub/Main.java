@@ -91,7 +91,7 @@ public class Main {
 		
 		commands.add(new Help());
 		commands.add(new Ping());
-		commands.add(new QR());
+		//commands.add(new QR());
 		
 		session.addMessagePostedListener(new SlackMessagePostedListener() {
 			@Override
