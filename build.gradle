@@ -68,6 +68,6 @@ docker {
     baseImage = 'library/java:latest'
 }
 
-task darbycodebotDocker(type: Docker) {
+distDocker {
     applicationName = 'darbycodebot'
 }
