@@ -43,16 +43,6 @@ public class Main {
 	}
 
 	/**
-	 * Address to bind socket to.
-	 */
-	private static final byte[] BIND_ADDRESS = new byte[] { 127, 0, 0, 1 };
-
-	/**
-	 * Socket: Currently used only to create only one bot at a time.
-	 */
-	private static ServerSocket socket;
-
-	/**
 	 * Logger.
 	 */
 	private static Logger logger = LoggerFactory.getLogger(Class.class);
@@ -83,15 +73,13 @@ public class Main {
 		logger.info("Working Directory = "
 				+ System.getProperty("user.dir"));
 		
-		checkIfRunning();
-
 		// Remember: Never commit the authentication token!
 		SlackSession session = SlackSessionFactory
 				.createWebSocketSlackSession(System.getenv("SLACK_API"));
 		
 		commands.add(new Help());
 		commands.add(new Ping());
-		commands.add(new QR());
+		//commands.add(new QR());
 		
 		session.addMessagePostedListener(new SlackMessagePostedListener() {
 			@Override
@@ -119,44 +107,5 @@ public class Main {
 			}
 		}
 
-	}
-
-	/**
-	 * Checks to see if there is another bot running and stops it. Uses
-	 * specified port from configuration.
-	 * 
-	 * @see http://stackoverflow.com/a/920403
-	 */
-	private static void checkIfRunning() {
-		try {
-			// Bind to localhost adapter with a zero connection queue
-			setSocket(new ServerSocket(
-					Integer.parseInt(Configuration.getConfig("port")), 0, 
-					InetAddress.getByAddress(BIND_ADDRESS)));
-		} catch (BindException e) {
-			logger.error(e.getMessage());
-			logger.error("Likely cause: " 
-					+ Error.ALREADY_RUNNING.getDescription());
-			System.exit(Error.ALREADY_RUNNING.getCode());
-		} catch (IOException e) {
-			logger.error(e.getMessage());
-			logger.error("Likely cause: " 
-					+ Error.SOCKET_ERROR.getDescription());
-			System.exit(Error.SOCKET_ERROR.getCode());
-		}
-	}
-
-	/**
-	 * @return socket
-	 */
-	public static ServerSocket getSocket() {
-		return socket;
-	}
-
-	/**
-	 * @param newSocket 
-	 */
-	public static void setSocket(final ServerSocket newSocket) {
-		socket = newSocket;
 	}
 }

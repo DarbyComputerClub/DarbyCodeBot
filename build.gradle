@@ -5,8 +5,11 @@ apply plugin: 'jdepend'
 apply plugin: 'pmd'
 apply plugin: 'eclipse'
 apply plugin: 'application'
+apply plugin: 'docker'
 
-sourceCompatibility = 1.6
+group = 'darbycomputerclub'
+sourceCompatibility = 1.7
+version = '1.0.1'
 
 repositories {
     mavenCentral()
@@ -19,6 +22,13 @@ dependencies {
 }
 
 mainClassName = "io.github.darbycomputerclub.Main"
+
+buildscript {
+    repositories { mavenCentral() }
+    dependencies {
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
+    }
+}
 
 checkstyle {
     toolVersion = "6.11.2"
@@ -51,4 +61,13 @@ task wrapper(type: Wrapper) {
 
 run.doFirst {
 	throw new GradleException("This should not be run from Gradle as there is \nno way to capture the Slack API key yet from Gradle.  \nPlease run this program manually.")
+}
+
+docker {
+    maintainer = 'Alex Shafer <shafer.alex@gmail.com>'
+    baseImage = 'library/java:latest'
+}
+
+distDocker {
+    applicationName = 'darbycodebot'
 }
