@@ -11,6 +11,8 @@ group = 'darbycomputerclub'
 sourceCompatibility = 1.7
 version = '1.0.1'
 
+eclipse.classpath.downloadJavadoc = true
+
 repositories {
     mavenCentral()
 }
@@ -47,20 +49,8 @@ jdepend {
 	ignoreFailures = true
 }
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'io.github.darbycomputerclub.Main'
-    }
-
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-}
-
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.7'
-}
-
-run.doFirst {
-	throw new GradleException("This should not be run from Gradle as there is \nno way to capture the Slack API key yet from Gradle.  \nPlease run this program manually.")
+    gradleVersion = '2.8'
 }
 
 docker {
