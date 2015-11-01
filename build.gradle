@@ -9,7 +9,7 @@ apply plugin: 'docker'
 
 group = 'darbycomputerclub'
 sourceCompatibility = 1.7
-version = '1.0.1'
+version = 'latest'
 
 repositories {
     mavenCentral()
