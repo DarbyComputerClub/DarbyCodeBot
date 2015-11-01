@@ -8,19 +8,7 @@ public enum Error {
 	/**
 	 * No config.properties file exists.
 	 */
-	NO_CONFIG(1, "No config.properties file exists."),
-	/**
-	 * Other file read exception on config.properties.
-	 */
-	CONFIG_READ(2, "Other file read exception on config.properties."),
-	/**
-	 * Other file read exception on config.properties.
-	 */
-	ALREADY_RUNNING(3, "Process already running. "),
-	/**
-	 * Other file read exception on config.properties.
-	 */
-	SOCKET_ERROR(4, "Unexpected Socket Error.");
+	UNKNOWN(1, "Unknown error.");
 
 	/**
 	 * Error code.
@@ -37,7 +25,7 @@ public enum Error {
 	 * @param errorCode Error code
 	 * @param errorDescription 
 	 */
-	private Error(final int errorCode, final String errorDescription) {
+	Error(final int errorCode, final String errorDescription) {
 		this.code = errorCode;
 		this.description = errorDescription;
 	}
