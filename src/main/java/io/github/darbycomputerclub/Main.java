@@ -49,6 +49,7 @@ public class Main {
 	 *            None.
 	 */
 	public static void main(final String[] args) {
+		logger.info("Current Version" + Version.CURRENT);
 		
 		logger.info("Working Directory = "
 				+ System.getProperty("user.dir"));
