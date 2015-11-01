@@ -26,7 +26,7 @@ public class QR extends MessageEvent {
 	public final void processEvent(final SlackMessagePosted event, 
 			final SlackSession session) {
 		if (event.getMessageContent().toString()
-				.startsWith("qr")) {
+				.startsWith("!qr")) {
 			String response = "http://api.qrserver.com/v1/create-qr-code/?data="
 					+ event.getMessageContent().split(" ")[1];
 			session.sendMessage(event.getChannel(), response, null);
