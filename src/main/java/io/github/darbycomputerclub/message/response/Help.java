@@ -7,6 +7,7 @@ import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 
 import io.github.darbycomputerclub.Main;
+import io.github.darbycomputerclub.Version;
 import io.github.darbycomputerclub.message.MessageEvent;
 
 /**
@@ -28,8 +29,9 @@ public class Help extends MessageEvent {
 			final SlackSession session) {
 		if (event.getMessageContent().toString()
 				.equalsIgnoreCase("!help")) {
-			String response = "List of commands: " 
-				+ "(Format: `command [required] (optional)`)\n";
+			String response = "Current Version: " + Version.CURRENT 
+					+ "\n\nList of commands: " 
+					+ "(Format: `command [required] (optional)`)\n";
 			
 			for (MessageEvent runEvent : Main.getCommands()) {
 				logger.info("Checking " + runEvent.getClass().getSimpleName());
