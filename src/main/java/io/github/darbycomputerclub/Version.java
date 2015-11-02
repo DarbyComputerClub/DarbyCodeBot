@@ -13,7 +13,7 @@ public enum Version {
 	/**
 	 * Current version info.
 	 */
-	CURRENT(1, 0, 3, true);
+	CURRENT(1, 0, 3, "alpha.3");
 	
 	/**
 	 * Major version number.
@@ -30,7 +30,7 @@ public enum Version {
 	/**
 	 * Is developer version.
 	 */
-	private boolean developerVersion;
+	private String releaseType;
 	
 	/**
 	 * Creates version number.
@@ -38,16 +38,16 @@ public enum Version {
 	 * @param majorVersion Major version
 	 * @param minorVersion Minor version
 	 * @param patchVersion Patch version
-	 * @param isDev Is this a developer version
+	 * @param releaseName Release type
 	 * 
 	 * @see http://semver.org/
 	 */
 	Version(final int majorVersion, final int minorVersion, 
-			final int patchVersion, final boolean isDev) {
+			final int patchVersion, final String releaseName) {
 		this.major = majorVersion;
 		this.minor = minorVersion;
 		this.patch = patchVersion;
-		this.developerVersion = isDev;
+		this.releaseType = releaseName;
 	}
 
 	/**
@@ -74,16 +74,16 @@ public enum Version {
 	/**
 	 * @return is developer version
 	 */
-	public boolean isDeveloperVersion() {
-		return developerVersion;
+	public String getReleaseType() {
+		return releaseType;
 	}
 	
 	@Override
 	public String toString() {
 		String versionName =  major + "." + minor + "." + patch;
 		
-		if (developerVersion) {
-			versionName += "-ALPHA";
+		if (!releaseType.equals("")) {
+			versionName += "-" + versionType;
 		}
 		
 		return versionName;
