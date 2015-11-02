@@ -20,6 +20,7 @@ repositories {
 dependencies {
     compile 'com.ullink.slack:simpleslackapi:0.4.5'
     compile 'ch.qos.logback:logback-classic:1.1.3'
+    compile 'com.twitter:hbc-twitter4j:2.2.0'
     testCompile 'junit:junit:4.12'
 }
 
