@@ -13,7 +13,7 @@ public enum Version {
 	/**
 	 * Current version info.
 	 */
-	CURRENT(1, 0, 2, false);
+	CURRENT(1, 0, 3, true);
 	
 	/**
 	 * Major version number.
@@ -80,10 +80,10 @@ public enum Version {
 	
 	@Override
 	public String toString() {
-		String versionName =  major + "." + minor + "." + patch + ".";
+		String versionName =  major + "." + minor + "." + patch;
 		
 		if (developerVersion) {
-			versionName += "-DEVELOPER";
+			versionName += "-ALPHA";
 		}
 		
 		return versionName;
