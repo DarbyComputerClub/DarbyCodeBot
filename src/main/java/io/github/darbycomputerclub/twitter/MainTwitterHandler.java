@@ -18,7 +18,7 @@ import twitter4j.UserStreamListener;
  * @author Alex Shafer
  *
  */
-public class MainTwitterHandler extends UserStreamListener {
+public class MainTwitterHandler implements UserStreamListener {
 
 	/**
 	 * Logger.
