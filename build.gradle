@@ -9,7 +9,7 @@ apply plugin: 'docker'
 
 group = 'darbycomputerclub'
 sourceCompatibility = 1.7
-version = '1.0.3+alpha.4'
+version = '1.0.3-alpha.4'
 
 eclipse.classpath.downloadJavadoc = true
 
