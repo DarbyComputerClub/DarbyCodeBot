@@ -99,10 +99,10 @@ public class Main {
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 		        @Override
 		            public void run() {
-		        		session.sendMessage(
+		        		/*session.sendMessage(
 		        				session.findChannelByName("bottesting"), 
 		        				"I'm getting an upgrade...? [Version " 
-									+ Version.CURRENT + "]", null);
+									+ Version.CURRENT + "]", null);*/
 		            }   
 		        });
 			
@@ -205,11 +205,11 @@ public class Main {
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			session.sendMessage(session.findChannelByName("bottesting"), 
+			/*session.sendMessage(session.findChannelByName("bottesting"), 
 					"Welp. I seem to have had an error... [Version " 
 							+ Version.CURRENT + "]", 
 							new SlackAttachment("Exception: ", "Exception: ",
-									e.getMessage(), e.getClass().getName()));
+									e.getMessage(), e.getClass().getName()));*/
 		}
 
 	}
