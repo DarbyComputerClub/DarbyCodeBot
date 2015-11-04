@@ -12,13 +12,13 @@ import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
 import twitter4j.User;
 import twitter4j.UserList;
-import twitter4j.UserStreamAdapter;
+import twitter4j.UserStreamListener;
 
 /**
  * @author Alex Shafer
  *
  */
-public class MainTwitterHandler extends UserStreamAdapter {
+public class MainTwitterHandler extends UserStreamListener {
 
 	/**
 	 * Logger.

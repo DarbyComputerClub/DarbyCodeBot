@@ -173,6 +173,7 @@ public class Main {
 		// to spin off for processing the raw messages.
 		// This should be called at least once.
 		t4jClient.process();
+		t4jClient.process();
 
 		try {
 			session.connect();
