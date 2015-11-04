@@ -108,10 +108,6 @@ public class Main {
 		commands.add(new AttachTest());
 		//commands.add(new QR());
 		
-		session.sendMessage(session.findChannelByName("bottesting"), 
-				"Up and Running! - Running Version " 
-						+ Version.CURRENT, null);
-		
 		session.addMessagePostedListener(new SlackMessagePostedListener() {
 			@Override
 			public void onEvent(final SlackMessagePosted event, 
