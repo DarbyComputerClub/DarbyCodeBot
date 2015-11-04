@@ -94,124 +94,103 @@ public class Main {
 	 *            None.
 	 */
 	public static void main(final String[] args) {
+		logger.info("Current Version" + Version.CURRENT);
+		
+		logger.info("Working Directory = "
+				+ System.getProperty("user.dir"));
+		
+		// Remember: Never commit the authentication token!
+		session = SlackSessionFactory
+				.createWebSocketSlackSession(System.getenv("SLACK_API"));
+		
+		commands.add(new Help());
+		commands.add(new Ping());
+		commands.add(new AttachTest());
+		//commands.add(new QR());
+		
+		session.sendMessage(session.findChannelByName("bottesting"), 
+				"Up and Running! - Running Version " 
+						+ Version.CURRENT, null);
+		
+		session.addMessagePostedListener(new SlackMessagePostedListener() {
+			@Override
+			public void onEvent(final SlackMessagePosted event, 
+					final SlackSession slackSession) {
+				for (MessageEvent runEvent : commands) {
+					logger.info("Checking " + runEvent.helpMessage());
+					
+					runEvent.processEvent(event, slackSession);
+				}
+			}
+		});
+		
+		/** 
+		 * Set up your blocking queues: Be sure to size 
+		 * these properly based on expected TPS of your stream 
+		 */
+		BlockingQueue<String> msgQueue = 
+				new LinkedBlockingQueue<String>(MSG_QUEUE_SIZE);
+		BlockingQueue<Event> eventQueue = 
+				new LinkedBlockingQueue<Event>(EVENT_QUEUE_SIZE);
+
+		/** 
+		 * Declare the host you want to connect to, 
+		 * the endpoint, and authentication (basic auth or oauth) 
+		 */
+		Hosts hosebirdHosts = new HttpHosts(Constants.USERSTREAM_HOST);
+		UserstreamEndpoint hosebirdEndpoint = new UserstreamEndpoint();
+
+		Authentication hosebirdAuth = new OAuth1(
+				System.getenv("TWITTER_CONSUMER_KEY"), 
+				System.getenv("TWITTER_CONSUMER_SECRET"), 
+				System.getenv("TWITTER_TOKEN"), 
+				System.getenv("TWITTER_SECRET"));
+		ClientBuilder builder = new ClientBuilder()
+			.name("Hosebird-Client-01")
+			.hosts(hosebirdHosts)
+			.authentication(hosebirdAuth)
+			.endpoint(hosebirdEndpoint)
+			.processor(new StringDelimitedProcessor(msgQueue))
+			.eventMessageQueue(eventQueue);
+
+		Client hosebirdClient = builder.build();
+		// Attempts to establish a connection.
+		
+		UserStreamListener listener = new MainTwitterHandler();
+			  
+		List<UserStreamListener> listeners = Lists.newArrayList();
+		listeners.add(listener);
+		
+		ThreadFactory threadFactory = new ThreadFactoryBuilder()
+			.setDaemon(true)
+			.setNameFormat("hosebird-client-io-thread-%d")
+			.build();
+		ExecutorService executorService = 
+				Executors.newSingleThreadExecutor(threadFactory);
+		
+		Twitter4jUserstreamClient t4jClient = 
+				new Twitter4jUserstreamClient(hosebirdClient, msgQueue,
+						listeners, executorService);
+		t4jClient.connect();
+		
+		// Call this once for every thread you want 
+		// to spin off for processing the raw messages.
+		// This should be called at least once.
+		t4jClient.process();
+
 		try {
-			
-			Runtime.getRuntime().addShutdownHook(new Thread() {
-		        @Override
-		            public void run() {
-		        		/*session.sendMessage(
-		        				session.findChannelByName("bottesting"), 
-		        				"I'm getting an upgrade...? [Version " 
-									+ Version.CURRENT + "]", null);*/
-		            }   
-		        });
-			
-			logger.info("Current Version" + Version.CURRENT);
-			
-			logger.info("Working Directory = "
-					+ System.getProperty("user.dir"));
-			
-			// Remember: Never commit the authentication token!
-			session = SlackSessionFactory
-					.createWebSocketSlackSession(System.getenv("SLACK_API"));
-			
-			commands.add(new Help());
-			commands.add(new Ping());
-			commands.add(new AttachTest());
-			//commands.add(new QR());
-			
-			session.sendMessage(session.findChannelByName("bottesting"), 
-					"Up and Running! - Running Version " 
-							+ Version.CURRENT, null);
-			
-			session.addMessagePostedListener(new SlackMessagePostedListener() {
-				@Override
-				public void onEvent(final SlackMessagePosted event, 
-						final SlackSession slackSession) {
-					for (MessageEvent runEvent : commands) {
-						logger.info("Checking " + runEvent.helpMessage());
-						
-						runEvent.processEvent(event, slackSession);
-					}
-				}
-			});
-			
-			/** 
-			 * Set up your blocking queues: Be sure to size 
-			 * these properly based on expected TPS of your stream 
-			 */
-			BlockingQueue<String> msgQueue = 
-					new LinkedBlockingQueue<String>(MSG_QUEUE_SIZE);
-			BlockingQueue<Event> eventQueue = 
-					new LinkedBlockingQueue<Event>(EVENT_QUEUE_SIZE);
-
-			/** 
-			 * Declare the host you want to connect to, 
-			 * the endpoint, and authentication (basic auth or oauth) 
-			 */
-			Hosts hosebirdHosts = new HttpHosts(Constants.USERSTREAM_HOST);
-			UserstreamEndpoint hosebirdEndpoint = new UserstreamEndpoint();
-
-			Authentication hosebirdAuth = new OAuth1(
-					System.getenv("TWITTER_CONSUMER_KEY"), 
-					System.getenv("TWITTER_CONSUMER_SECRET"), 
-					System.getenv("TWITTER_TOKEN"), 
-					System.getenv("TWITTER_SECRET"));
-			ClientBuilder builder = new ClientBuilder()
-				.name("Hosebird-Client-01")
-				.hosts(hosebirdHosts)
-				.authentication(hosebirdAuth)
-				.endpoint(hosebirdEndpoint)
-				.processor(new StringDelimitedProcessor(msgQueue))
-				.eventMessageQueue(eventQueue);
-
-			Client hosebirdClient = builder.build();
-			// Attempts to establish a connection.
-			
-			UserStreamListener listener = new MainTwitterHandler();
-				  
-			List<UserStreamListener> listeners = Lists.newArrayList();
-			listeners.add(listener);
-			
-			ThreadFactory threadFactory = new ThreadFactoryBuilder()
-			        .setDaemon(true)
-			        .setNameFormat("hosebird-client-io-thread-%d")
-			        .build();
-			ExecutorService executorService = 
-					Executors.newSingleThreadExecutor(threadFactory);
-			
-			Twitter4jUserstreamClient t4jClient = 
-					new Twitter4jUserstreamClient(hosebirdClient, msgQueue,
-							listeners, executorService);
-			t4jClient.connect();
-
-			// Call this once for every thread you want 
-			// to spin off for processing the raw messages.
-			// This should be called at least once.
-			t4jClient.process();
-
-			try {
-				session.connect();
-			} catch (IOException e) {
-				logger.error(e.getMessage());
-			}
-
-			while (true) {
-				try {
-					Thread.sleep(SLEEP_CONSTANT);
-				} catch (InterruptedException e) {
-					logger.error(e.getMessage());
-				}
-			}
-		} catch (Exception e) {
+			session.connect();
+		} catch (IOException e) {
 			logger.error(e.getMessage());
-			/*session.sendMessage(session.findChannelByName("bottesting"), 
-					"Welp. I seem to have had an error... [Version " 
-							+ Version.CURRENT + "]", 
-							new SlackAttachment("Exception: ", "Exception: ",
-									e.getMessage(), e.getClass().getName()));*/
 		}
 
+		while (true) {
+			try {
+				Thread.sleep(SLEEP_CONSTANT);
+			} catch (InterruptedException e) {
+				logger.error(e.getMessage());
+			}
+		}
 	}
 	
 	/**
