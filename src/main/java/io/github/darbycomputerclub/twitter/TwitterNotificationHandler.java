@@ -18,13 +18,13 @@ import twitter4j.UserStreamListener;
  * @author Alex Shafer
  *
  */
-public class MainTwitterHandler implements UserStreamListener {
+public class TwitterNotificationHandler implements UserStreamListener {
 
 	/**
 	 * Logger.
 	 */
 	private static Logger logger = LoggerFactory.getLogger(
-			MainTwitterHandler.class);
+			TwitterNotificationHandler.class);
 	
 	/**
 	 * Channel to post to.
@@ -34,8 +34,9 @@ public class MainTwitterHandler implements UserStreamListener {
 	@Override
 	public final void onStatus(final Status status) {
 		String message = "@" + status.getUser().getScreenName() 
-				+ " Tweeted: " + status.getText() 
-				+ "[TweetID:" + status.getId() + "]";
+				+ " Tweeted: " + status.getText() + "(https://twitter.com/" 
+				+ status.getUser().getScreenName() 
+				+ "/status/" + status.getId() + ")";
 		logger.info(message);
 		Main.getSession().sendMessage(
 				Main.getSession().findChannelByName(CHANNEL), 
@@ -98,8 +99,9 @@ public class MainTwitterHandler implements UserStreamListener {
 	@Override
 	public final void onFavorite(final User source, 
 			final User target, final Status favoritedStatus) {
-		String message = ":grinning: TweetID " + favoritedStatus.getId() 
-				+ "Favorited :heart: by @" + source.getScreenName();
+		String message = ":grinning: " + "https://twitter.com/" 
+			+ target.getScreenName() + "/status/" + favoritedStatus.getId()
+			+ " Favorited :heart: by @" + source.getScreenName();
 		logger.info(message);
 		Main.getSession().sendMessage(
 				Main.getSession().findChannelByName(CHANNEL), 
@@ -110,7 +112,9 @@ public class MainTwitterHandler implements UserStreamListener {
 	@Override
 	public final void onUnfavorite(final User source, final User target, 
 			final Status unfavoritedStatus) {
-		String message = ":disappointed: TweetID " + unfavoritedStatus.getId() 
+		String message = ":disappointed: " + "https://twitter.com/" 
+				+ target.getScreenName() + "/status/" 
+				+ unfavoritedStatus.getId()
 				+ "Unfavorited :broken_heart: by @" + source.getScreenName();
 		logger.info(message);
 		Main.getSession().sendMessage(
@@ -121,8 +125,10 @@ public class MainTwitterHandler implements UserStreamListener {
 
 	@Override
 	public final void onFollow(final User source, final User followedUser) {
-		String message = ":bangbang: New follow @" + source.getScreenName() 
-				+ " followed @" + followedUser.getScreenName();
+		String message = ":bangbang: New follow @" + source.getScreenName()
+			+ "https://twitter.com/" + source.getScreenName()
+			+ " followed @" + followedUser.getScreenName()
+			+ "https://twitter.com/" + followedUser.getScreenName();
 		logger.info(message);
 		Main.getSession().sendMessage(
 				Main.getSession().findChannelByName(CHANNEL), 
@@ -133,7 +139,9 @@ public class MainTwitterHandler implements UserStreamListener {
 	@Override
 	public final void onUnfollow(final User source, final User unfollowedUser) {
 		String message = ":bangbang: New follow @" + source.getScreenName() 
-				+ " unfollowed @" + unfollowedUser.getScreenName();
+			+ "https://twitter.com/" + source.getScreenName()
+			+ " unfollowed @" + unfollowedUser.getScreenName()
+			+ "https://twitter.com/" + unfollowedUser.getScreenName();
 		logger.info(message);
 		Main.getSession().sendMessage(
 				Main.getSession().findChannelByName(CHANNEL), 

@@ -13,7 +13,7 @@ public enum Version {
 	/**
 	 * Current version info.
 	 */
-	CURRENT(1, 0, 3, "alpha.6");
+	CURRENT(1, 0, 4, "beta.1");
 	
 	/**
 	 * Major version number.
@@ -82,7 +82,7 @@ public enum Version {
 	public String toString() {
 		String versionName =  major + "." + minor + "." + patch;
 		
-		if (!releaseType.equals("")) {
+		if (releaseType != null || !releaseType.equals("")) {
 			versionName += "-" + releaseType;
 		}
 		
