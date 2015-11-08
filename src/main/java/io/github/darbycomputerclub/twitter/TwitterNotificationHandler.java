@@ -115,7 +115,7 @@ public class TwitterNotificationHandler extends UserStreamAdapter {
 		String message = ":disappointed: " + "https://twitter.com/" 
 				+ target.getScreenName() + "/status/" 
 				+ unfavoritedStatus.getId()
-				+ "Unfavorited :broken_heart: by @" + source.getScreenName();
+				+ " Unfavorited :broken_heart: by @" + source.getScreenName();
 		logger.info(message);
 		Main.getSession().sendMessage(
 				Main.getSession().findChannelByName(CHANNEL), 
@@ -126,9 +126,9 @@ public class TwitterNotificationHandler extends UserStreamAdapter {
 	@Override
 	public final void onFollow(final User source, final User followedUser) {
 		String message = ":bangbang: New follow @" + source.getScreenName()
-			+ "https://twitter.com/" + source.getScreenName()
+			+ " https://twitter.com/" + source.getScreenName()
 			+ " followed @" + followedUser.getScreenName()
-			+ "https://twitter.com/" + followedUser.getScreenName();
+			+ " https://twitter.com/" + followedUser.getScreenName();
 		logger.info(message);
 		Main.getSession().sendMessage(
 				Main.getSession().findChannelByName(CHANNEL), 
@@ -139,9 +139,9 @@ public class TwitterNotificationHandler extends UserStreamAdapter {
 	@Override
 	public final void onUnfollow(final User source, final User unfollowedUser) {
 		String message = ":bangbang: New follow @" + source.getScreenName() 
-			+ "https://twitter.com/" + source.getScreenName()
+			+ " https://twitter.com/" + source.getScreenName()
 			+ " unfollowed @" + unfollowedUser.getScreenName()
-			+ "https://twitter.com/" + unfollowedUser.getScreenName();
+			+ " https://twitter.com/" + unfollowedUser.getScreenName();
 		logger.info(message);
 		Main.getSession().sendMessage(
 				Main.getSession().findChannelByName(CHANNEL), 

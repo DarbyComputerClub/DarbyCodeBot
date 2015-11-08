@@ -29,7 +29,6 @@ import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
 import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener;
 
 import io.github.darbycomputerclub.message.MessageEvent;
-import io.github.darbycomputerclub.message.response.AttachTest;
 import io.github.darbycomputerclub.message.response.Help;
 import io.github.darbycomputerclub.message.response.Ping;
 import io.github.darbycomputerclub.twitter.TwitterNotificationHandler;
@@ -109,7 +108,6 @@ public class Main {
 			
 			commands.add(new Help());
 			commands.add(new Ping());
-			commands.add(new AttachTest());
 			//commands.add(new QR());
 			
 			session.addMessagePostedListener(new SlackMessagePostedListener() {
