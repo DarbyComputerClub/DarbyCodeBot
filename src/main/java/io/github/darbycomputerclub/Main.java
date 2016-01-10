@@ -202,11 +202,7 @@ public class Main {
 							logger.debug("Sent");
 							session.sendMessage(
 									session.findChannelByName("bottesting"), 
-									null, new SlackAttachment(
-											"Latest game results", 
-											null, 
-											"```\n" + getResults + "\n```", 
-											"Game Run at " + get));
+									"```\n" + getResults + "\n```", null);
 							lastupdate = get;
 						}
 					} catch (UnsupportedEncodingException e) {
