@@ -187,7 +187,7 @@ public class Main {
 										(line = resultsReader.readLine()) 
 										!= null;) {
 									logger.debug(line);
-							        getResults += line + "\n";
+							        getResults += "\n" + line;
 							    }
 
 							} catch (UnsupportedEncodingException e) {
@@ -202,7 +202,8 @@ public class Main {
 							logger.debug("Sent");
 							session.sendMessage(
 									session.findChannelByName("bottesting"), 
-									"```\n" + getResults + "\n```", null);
+									"```\n" + getResults + "\n```\n"
+									+ resultsUrl.toString(), null);
 							lastupdate = get;
 						}
 					} catch (UnsupportedEncodingException e) {
