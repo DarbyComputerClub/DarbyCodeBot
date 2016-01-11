@@ -132,8 +132,8 @@ public class Main {
 			
 			logger.debug("Started.");
 
-			//session.sendMessage(session.findChannelByName("bottesting"),
-			//		"I'm Back!!! Now running Version " + Version.CURRENT, null);
+			session.sendMessage(session.findChannelByName("bottesting"),
+					"I'm Back!!! Now running Version " + Version.CURRENT, null);
 
 			final ScheduledExecutorService executorService 
 				= Executors.newSingleThreadScheduledExecutor();
@@ -202,7 +202,7 @@ public class Main {
 							logger.debug("Sent");
 							session.sendMessage(
 									session.findChannelByName("bottesting"), 
-									"```\n" + getResults + "\n```\n"
+"https://raw.githubusercontent.com/DarbyComputerClub/darbyrobocode/gh-pages/battlegraphic.png \nFull Results: "
 									+ resultsUrl.toString(), null);
 							lastupdate = get;
 						}
