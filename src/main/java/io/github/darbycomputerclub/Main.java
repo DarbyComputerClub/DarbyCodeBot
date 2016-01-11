@@ -202,8 +202,7 @@ public class Main {
 							logger.debug("Sent");
 							session.sendMessage(
 									session.findChannelByName("robocode"), 
-"https://raw.githubusercontent.com/DarbyComputerClub/darbyrobocode/gh-pages/battlegraphic.png \nFull Results: "
-									+ resultsUrl.toString(), null);
+									"https://raw.githubusercontent.com/DarbyComputerClub/darbyrobocode/gh-pages/battlegraphic.png", null);
 							lastupdate = get;
 						}
 					} catch (UnsupportedEncodingException e) {
