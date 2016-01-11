@@ -13,7 +13,7 @@ public enum Version {
 	/**
 	 * Current version info.
 	 */
-	CURRENT(1, 1, 0, "alpha.0");
+	CURRENT(1, 1, 0, "beta.1");
 	
 	/**
 	 * Major version number.
