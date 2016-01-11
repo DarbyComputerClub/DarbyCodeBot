@@ -201,7 +201,7 @@ public class Main {
 							
 							logger.debug("Sent");
 							session.sendMessage(
-									session.findChannelByName("bottesting"), 
+									session.findChannelByName("robocode"), 
 "https://raw.githubusercontent.com/DarbyComputerClub/darbyrobocode/gh-pages/battlegraphic.png \nFull Results: "
 									+ resultsUrl.toString(), null);
 							lastupdate = get;
